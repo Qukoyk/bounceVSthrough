@@ -669,7 +669,4 @@ try:
 except KeyboardInterrupt:
     pass
     
-
-leverRetract()
-board.digital[leverRightMove].write(0)
-board.exit()
+bye()

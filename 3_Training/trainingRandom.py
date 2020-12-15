@@ -1,7 +1,7 @@
 '''
-errorlessThrough10Bounce10.py
+errorlessThroughBounceRandom.py
 
-エラーレストレーニング・交差10反発10
+エラーレストレーニング・交差反発ランダム
 
 '''
 
@@ -19,7 +19,7 @@ __contacts__ = "quruoheng@hiroshima-u.ac.jp"
 ###################################
 
 
-answer2 = '3_errorlessBouncing_2'
+answer2 = 'test'
 
 
 ###################################
@@ -344,6 +344,7 @@ def dataSaving():
     with open(answer2 + '_randomColorList.csv', 'a+') as myfile2:
         writer = csv.writer(myfile2)
         writer.writerow(randList)
+        pass
     with open(answer2 + '_randomMovementList.csv', 'a+') as myfile3:
         writer = csv.writer(myfile3)
         writer.writerow(btList)
@@ -438,12 +439,31 @@ print("灰白リスト生成されました", '\n', randList)
 
 # Through/Bounce list
 btList = []
-for i in range(3):
-    for j in range(10):
-        btList.append(0)
+sumRand = 0
+# 「半々」じゃないとずっと繰り返す
+while sumRand != 30:
+    # リセット
+    btList = []
+    sumRand = 0
+    # 新しい乱数列を再生成
+    sum0 = 0
+    # 初期的乱数列を生成
+    for i in range(60):
+        btList.append(random.randint(0,1))
+        i = i + 1
         pass
-    for k in range(10):
-        btList.append(1)
+    # 4連以上しないように次の項目を調整
+    for i in range(57):
+        sum0 = btList[i] + btList[i+1] + btList[i+2]
+        if sum0 == 0: # 0が3連になると次の項目を1に変わる
+            btList[i+3] = 1
+            pass
+        if sum0 == 3: # 1が3連になると次の項目を0に変わる
+            btList[i+3] = 0
+            pass
+        pass
+    for i in range(60):
+        sumRand = sumRand + btList[i]
         pass
     pass
 print("Through/Bounceリスト生成されました", '\n', btList)
@@ -504,40 +524,44 @@ try:
                         time.sleep(0.5)
                 pass
 
-        # 正しくtouchingしたら
-        if gogogo == 1:
-            # 乱数列から読み取って，0/1によって視覚刺激を呈示
-            if btList[listPosition] == 0:
-                if randList[listPosition] == 0:
-                    through(GREY1,WHITE)
-                    pass
-                else:
-                    through(WHITE,GREY1)
-                    pass
+            
+        # 乱数列から読み取って，0/1によって視覚刺激を呈示
+        if btList[listPosition] == 0:
+            if randList[listPosition] == 0:
+                through(GREY1,WHITE)
                 pass
             else:
-                if randList[listPosition] == 0:
-                    bounce(GREY1,WHITE)
-                    pass
-                else:
-                    bounce(WHITE,GREY1)
-                    pass
+                through(WHITE,GREY1)
                 pass
+            pass
+        else:
+            if randList[listPosition] == 0:
+                bounce(GREY1,WHITE)
+                pass
+            else:
+                bounce(WHITE,GREY1)
+                pass
+            pass
+        
+
+        # 正しくtouchingしたら
+        while gogogo == 1:
+            
             # 提示後大きな真っ黒四角マスキング
             itiMask = pygame.draw.rect(screen, BLACK, [0,0,1280,720])
             pygame.display.update()
             # レバー呈示
             time.sleep(0.5)
-            if btList[listPosition] == 0:
-                leverOut(leverLeftMove)
-                pass
-            else:
-                leverOut(leverRightMove)
-                pass
+            leverOut(leverLeftMove)
+            leverOut(leverRightMove)
+            # if btList[listPosition] == 0:
+            #     leverOut(leverLeftMove)
+            #     pass
+            # else:
+            #     leverOut(leverRightMove)
+            #     pass
             timeTrialLever = time.time()
-            # 乱数列累進
-            listPosition = listPosition + 1
-            # board.digital[leverRightMove].write(1)
+            rightAnswer = btList[listPosition]
 
             # レバー押しを測る
             while react != x: # 加速ループ → この部分に絞る
@@ -590,7 +614,7 @@ try:
                 coolDown()
 
             # FRを達成したら：
-            if leftRight == 'right' and react == x: # 右
+            if leftRight == 'right' and react == x and rightAnswer == 1: # 右
                 leverRetract(leverLeftMove)
                 leverRetract(leverRightMove)
                 react = 0
@@ -609,8 +633,10 @@ try:
                 # レバー引き込みとITI
                 ITI(iti)
                 timeTrialBlock = time.time()
-                pass
-            elif leftRight == 'left' and react == x: # 左
+                # 乱数列累進
+                listPosition = listPosition + 1
+                break
+            elif leftRight == 'left' and react == x and rightAnswer == 0: # 左
                 leverRetract(leverLeftMove)
                 leverRetract(leverRightMove)
                 react = 0
@@ -629,6 +655,26 @@ try:
                 reinforce(1)
                 # レバー引き込みとITI
                 ITI(iti)
+                timeTrialBlock = time.time()
+                # 乱数列累進
+                listPosition = listPosition + 1
+                break
+            elif leftRight == 'left' and react == x and rightAnswer == 1: # 右が正解なのに左が押された場合
+                react = 0
+                leftRight = ''
+                print("交差試行に反発レバーを選んだ　誤反応")
+                print("反応時間", timePast)
+                print("反応潜時", timeLatency)
+                print('\n'+'===================='+'\n')
+                timeTrialBlock = time.time()
+                pass
+            elif leftRight == 'right' and react == x and rightAnswer == 0: # 左が正解なのに右が押された場合
+                react = 0
+                leftRight = ''
+                print("反発試行に交差レバーを選んだ　誤反応")
+                print("反応時間", timePast)
+                print("反応潜時", timeLatency)
+                print('\n'+'===================='+'\n')
                 timeTrialBlock = time.time()
                 pass
 
