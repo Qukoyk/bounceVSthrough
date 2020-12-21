@@ -342,12 +342,12 @@ def dataSaving():
     # 生成された乱数列を保存
     # randomList = list(zip(*randList))
     with open(answer2 + '_randomColorList.csv', 'a+') as myfile2:
-        writer = csv.writer(myfile2)
-        writer.writerow(randList)
+        writer2 = csv.writer(myfile2)
+        writer2.writerow(randList)
         pass
     with open(answer2 + '_randomMovementList.csv', 'a+') as myfile3:
-        writer = csv.writer(myfile3)
-        writer.writerow(btList)
+        writer3 = csv.writer(myfile3)
+        writer3.writerow(btList)
     pass
 
 # 「後片付け」関数

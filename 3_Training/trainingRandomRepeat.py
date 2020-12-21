@@ -19,7 +19,7 @@ __contacts__ = "quruoheng@hiroshima-u.ac.jp"
 ###################################
 
 
-answer2 = 'test'
+answer2 = 'testR'
 
 
 ###################################
@@ -342,16 +342,17 @@ def dataSaving():
     # 生成された乱数列を保存
     # randomList = list(zip(*randList))
     with open(answer2 + '_randomColorList.csv', 'a+') as myfile2:
-        writer = csv.writer(myfile2)
-        writer.writerow(randList)
+        writer2 = csv.writer(myfile2)
+        writer2.writerow(randList)
         pass
     with open(answer2 + '_randomMovementList.csv', 'a+') as myfile3:
-        writer = csv.writer(myfile3)
-        writer.writerow(btList)
+        writer3 = csv.writer(myfile3)
+        writer3.writerow(btList)
     pass
 
 # 「後片付け」関数
 def bye():
+    dataSaving()
     board.digital[houseLight].write(0)
     board.digital[leverLeftMove].write(0)
     board.digital[leverRightMove].write(0)
@@ -663,23 +664,31 @@ try:
                 listPosition = listPosition + 1
                 break
             elif leftRight == 'left' and react == x and rightAnswer == 1: # 右が正解なのに左が押された場合
+                leverRetract(leverLeftMove)
+                leverRetract(leverRightMove)
                 react = 0
                 leftRight = ''
+                board.digital[houseLight].write(0)
                 print("交差試行に反発レバーを選んだ　誤反応")
                 print("反応時間", timePast)
                 print("反応潜時", timeLatency)
                 print('\n'+'===================='+'\n')
                 timeTrialBlock = time.time()
-                pass
+                time.sleep(0.5)
+                break
             elif leftRight == 'right' and react == x and rightAnswer == 0: # 左が正解なのに右が押された場合
+                leverRetract(leverLeftMove)
+                leverRetract(leverRightMove)
                 react = 0
                 leftRight = ''
+                board.digital[houseLight].write(0)
                 print("反発試行に交差レバーを選んだ　誤反応")
                 print("反応時間", timePast)
                 print("反応潜時", timeLatency)
                 print('\n'+'===================='+'\n')
                 timeTrialBlock = time.time()
-                pass
+                time.sleep(0.5)
+                break
 
 
         time.sleep(0.01)
@@ -697,5 +706,5 @@ try:
 except KeyboardInterrupt:
     pass
     
-
+dataSaving()
 bye()
