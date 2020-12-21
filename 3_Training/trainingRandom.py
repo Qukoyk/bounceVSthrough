@@ -1,7 +1,7 @@
 '''
-errorlessThroughBounceRandom.py
+trainingRandom.py
 
-エラーレストレーニング・交差反発ランダム
+トレーニング・交差反発ランダム
 
 '''
 
