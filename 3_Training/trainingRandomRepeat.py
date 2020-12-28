@@ -669,7 +669,7 @@ try:
                 react = 0
                 leftRight = ''
                 board.digital[houseLight].write(0)
-                print("交差試行に反発レバーを選んだ　誤反応")
+                print("反発試行に交差レバーを選んだ　誤反応")
                 print("反応時間", timePast)
                 print("反応潜時", timeLatency)
                 print('\n'+'===================='+'\n')
@@ -682,7 +682,7 @@ try:
                 react = 0
                 leftRight = ''
                 board.digital[houseLight].write(0)
-                print("反発試行に交差レバーを選んだ　誤反応")
+                print("交差試行に反発レバーを選んだ　誤反応")
                 print("反応時間", timePast)
                 print("反応潜時", timeLatency)
                 print('\n'+'===================='+'\n')

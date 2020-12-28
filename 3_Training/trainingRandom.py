@@ -662,7 +662,7 @@ try:
             elif leftRight == 'left' and react == x and rightAnswer == 1: # 右が正解なのに左が押された場合
                 react = 0
                 leftRight = ''
-                print("交差試行に反発レバーを選んだ　誤反応")
+                print("反発試行に交差レバーを選んだ　誤反応")
                 print("反応時間", timePast)
                 print("反応潜時", timeLatency)
                 print('\n'+'===================='+'\n')
@@ -671,7 +671,7 @@ try:
             elif leftRight == 'right' and react == x and rightAnswer == 0: # 左が正解なのに右が押された場合
                 react = 0
                 leftRight = ''
-                print("反発試行に交差レバーを選んだ　誤反応")
+                print("交差試行に反発レバーを選んだ　誤反応")
                 print("反応時間", timePast)
                 print("反応潜時", timeLatency)
                 print('\n'+'===================='+'\n')
