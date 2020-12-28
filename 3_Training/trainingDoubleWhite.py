@@ -119,7 +119,8 @@ screen = pygame.display.set_mode(size,vsync=1)
 
 
 # ファイルの保存先（ディレクトリ）
-os.chdir('C:/Desktop/kyoku/shapingData/')
+# os.chdir('C:/Desktop/kyoku/shapingData/')
+os.chdir('C:/Users/BioPsychology3/Desktop/kyoku/shapingData/')
 
 # 変数関係
 leftRight = 0
@@ -228,6 +229,8 @@ def through(ballLeftColor,ballRightColor):
     ballRight = pygame.draw.circle(screen, ballRightColor, [ballRightPosition,height], 30, 0)
     pygame.display.update()
     time.sleep(0.5)
+    blackMask = pygame.draw.rect(screen, BLACK, [0,0,1280,720])
+    pygame.display.update()
     
     pass
 
@@ -279,6 +282,8 @@ def bounce(ballLeftColor,ballRightColor):
     ballRight = pygame.draw.circle(screen, ballRightColor, [ballRightPosition,height], 30, 0)
     pygame.display.update()
     time.sleep(0.5)
+    blackMask = pygame.draw.rect(screen, BLACK, [0,0,1280,720])
+    pygame.display.update()
     pass
 
 # pygameの監視関数
