@@ -23,7 +23,7 @@ __contacts__ = "quruoheng@hiroshima-u.ac.jp"
 ###################################
 
 
-answer2 = '3_TrainingDoubleWhite_8'
+answer2 = 'test'
 
 
 ###################################
@@ -694,13 +694,10 @@ try:
                 leftRight = ''
                 # 試行を累進する
                 trial = trial + 1
-                leverLeftTrial = leverLeftTrial + 1
-                leverActData.insert(leverPressCounter - 1, leverLeftTrial)
-                randomData.insert(leverPressCounter - 1, reinforcers)
-                # board.digital[houseLight].write(0)
                 print("反発試行に交差レバーを選んだ　誤反応")
                 print("反応時間", timePast)
                 print("反応潜時", timeLatency)
+                print("今までの総正解試行数",str(leverLeftTrial+leverRightTrial),"/60")
                 print('\n'+'===================='+'\n')
                 # レバー引き込みとITI
                 ITI(iti)
@@ -715,13 +712,10 @@ try:
                 leftRight = ''
                 # 試行を累進する
                 trial = trial + 1
-                leverLeftTrial = leverLeftTrial + 1
-                leverActData.insert(leverPressCounter - 1, leverLeftTrial)
-                randomData.insert(leverPressCounter - 1, reinforcers)
-                # board.digital[houseLight].write(0)
                 print("交差試行に反発レバーを選んだ　誤反応")
                 print("反応時間", timePast)
                 print("反応潜時", timeLatency)
+                print("今までの総正解試行数",str(leverLeftTrial+leverRightTrial),"/60")
                 print('\n'+'===================='+'\n')
                 # レバー引き込みとITI
                 ITI(iti)
